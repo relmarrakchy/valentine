@@ -5,7 +5,6 @@ import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import FloatingHearts from "@/components/FloatingHearts";
-import HeartSVG from "@/components/HeartSVG";
 import LoveEnvelope from "@/components/LoveEnvelope";
 import ValentineButton from "@/components/ValentineButton";
 import ScrollQuotes from "@/components/ScrollQuotes";
@@ -13,13 +12,13 @@ import LetterEnvelope from "@/components/LetterEnvelope";
 import ScrollModal from "@/components/ScrollModal";
 
 const quotes = [
-  "Whatever our souls are made of, his and mine are the same.",
-  "I have waited for this opportunity for more than half a century, to repeat to you once again my vow of eternal fidelity and everlasting love.",
-  "You don't love someone for their looks, or their clothes, or for their fancy car, but because they sing a song only you can hear.",
-  "I would rather spend one lifetime with you, than face all the ages of this world alone.",
+  "A real friend walks in when the rest of the world walks out.",
+  "Friendship is born at that moment when one person says to another, 'What! You too? I thought I was the only one.'",
+  "There is nothing I would not do for those who are really my friends. I have no notion of loving people by halves; it is not my nature.",
+  "In the end, we will remember not the words of our enemies, but the silence of our friends.",
 ];
 
-function ValentineContent() {
+function MateContent() {
   const searchParams = useSearchParams();
   const name = searchParams.get("name");
   const [envelopeOpened, setEnvelopeOpened] = useState(false);
@@ -28,7 +27,7 @@ function ValentineContent() {
   const letterRef = useRef<HTMLElement>(null);
   const questionRef = useRef<HTMLElement>(null);
 
-  const displayName = name || "My Love";
+  const displayName = name || "Brother";
 
   useEffect(() => {
     if (!envelopeOpened || letterOpened) return;
@@ -52,12 +51,12 @@ function ValentineContent() {
   }, [envelopeOpened, letterOpened]);
 
   return (
-    <main className="relative min-h-screen bg-rose-50">
-      <FloatingHearts variant="love" />
+    <main className="relative min-h-screen bg-amber-50">
+      <FloatingHearts variant="friend" />
       <ScrollModal 
         isOpen={showModal} 
         onClose={() => setShowModal(false)} 
-        variant="love"
+        variant="friend"
       />
 
       <AnimatePresence mode="wait">
@@ -65,7 +64,7 @@ function ValentineContent() {
           <LoveEnvelope
             key="envelope"
             name={name || undefined}
-            variant="love"
+            variant="friend"
             onOpen={() => setEnvelopeOpened(true)}
           />
         ) : (
@@ -84,10 +83,25 @@ function ValentineContent() {
                 transition={{ delay: 0.2, duration: 1.5 }}
                 className="flex flex-col items-center gap-6"
               >
-                <HeartSVG color="#e11d48" size={50} />
+                {/* Heart icon */}
+                <motion.svg
+                  width="50"
+                  height="50"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#92400e"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ type: "spring", stiffness: 120, damping: 14, delay: 0.3 }}
+                >
+                  <path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z" />
+                </motion.svg>
 
                 <motion.div
-                  className="w-12 h-px bg-rose-300"
+                  className="w-12 h-px bg-amber-400"
                   initial={{ width: 0 }}
                   animate={{ width: 48 }}
                   transition={{ delay: 0.8, duration: 1 }}
@@ -97,22 +111,22 @@ function ValentineContent() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5, duration: 1 }}
-                  className="text-5xl md:text-8xl font-serif text-rose-800 leading-tight"
+                  className="text-5xl md:text-8xl font-serif text-amber-900 leading-tight"
                 >
-                  Happy<br />Valentine&apos;s Day
+                  Happy<br />Broentine&apos;s Day
                 </motion.h1>
 
                 <motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 1.2, duration: 1 }}
-                  className="text-xl md:text-2xl font-script text-rose-500 mt-2"
+                  className="text-xl md:text-2xl font-script text-amber-600 mt-2"
                 >
                   — {displayName} —
                 </motion.p>
 
                 <motion.div
-                  className="w-12 h-px bg-rose-300"
+                  className="w-12 h-px bg-amber-400"
                   initial={{ width: 0 }}
                   animate={{ width: 48 }}
                   transition={{ delay: 1.5, duration: 1 }}
@@ -127,7 +141,7 @@ function ValentineContent() {
                   <motion.div
                     animate={{ y: [0, 6, 0] }}
                     transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" as const }}
-                    className="text-rose-300 text-sm tracking-[0.3em] uppercase"
+                    className="text-amber-400 text-sm tracking-[0.3em] uppercase"
                   >
                     scroll down
                   </motion.div>
@@ -136,19 +150,19 @@ function ValentineContent() {
             </section>
 
             {/* ─── Scroll Quotes ─── */}
-            <ScrollQuotes quotes={quotes} variant="love" />
+            <ScrollQuotes quotes={quotes} variant="friend" />
 
             {/* ─── Letter Envelope ─── */}
             <LetterEnvelope 
               ref={letterRef}
               name={name || undefined} 
-              variant="love"
+              variant="friend"
               isOpen={letterOpened}
               onOpen={() => setLetterOpened(true)}
             />
 
             {/* ─── The Question ─── */}
-            <section ref={questionRef} className="min-h-screen flex items-center justify-center px-8 bg-rose-50">
+            <section ref={questionRef} className="min-h-screen flex items-center justify-center px-8 bg-amber-50">
               <motion.div
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -156,7 +170,7 @@ function ValentineContent() {
                 transition={{ duration: 1, ease: "easeOut" as const }}
                 className="max-w-2xl mx-auto w-full"
               >
-                <ValentineButton variant="love" />
+                <ValentineButton variant="friend" />
               </motion.div>
             </section>
           </motion.div>
@@ -166,21 +180,21 @@ function ValentineContent() {
   );
 }
 
-export default function Home() {
+export default function MatePage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center bg-rose-50">
+        <div className="min-h-screen flex items-center justify-center bg-amber-50">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: [0.3, 0.6, 0.3] }}
             transition={{ repeat: Infinity, duration: 2 }}
-            className="w-2 h-2 rounded-full bg-rose-300"
+            className="w-2 h-2 rounded-full bg-amber-400"
           />
         </div>
       }
     >
-      <ValentineContent />
+      <MateContent />
     </Suspense>
   );
 }
