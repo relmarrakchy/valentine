@@ -199,7 +199,7 @@ const LetterEnvelope = forwardRef<HTMLElement, LetterEnvelopeProps>(function Let
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 1.1, duration: 0.8 }}
-                        className="w-90 relative left-8 top-12 text-base md:text-lg lg:text-xl leading-relaxed md:leading-[2.2] text-black font-script"
+                        className="w-90 relative left-5 top-12 text-base md:text-lg lg:text-xl leading-relaxed md:leading-[2.2] text-black font-script"
                       >
                         {letterBody}
                       </motion.p>
