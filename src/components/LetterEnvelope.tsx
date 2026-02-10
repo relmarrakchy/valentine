@@ -190,7 +190,7 @@ const LetterEnvelope = forwardRef<HTMLElement, LetterEnvelopeProps>(function Let
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.8, duration: 0.6 }}
-                        className="text-xl md:text-2xl lg:text-3xl font-script text-black mb-6 md:mb-8 leading-relaxed"
+                        className="relative left-3 text-xl md:text-2xl lg:text-3xl font-script text-black mb-6 md:mb-8 leading-relaxed"
                       >
                         {greeting}
                       </motion.p>
@@ -199,7 +199,7 @@ const LetterEnvelope = forwardRef<HTMLElement, LetterEnvelopeProps>(function Let
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 1.1, duration: 0.8 }}
-                        className="text-base md:text-lg lg:text-xl leading-relaxed md:leading-[2.2] text-black font-script"
+                        className="w-100 relative left-10 top-12 text-base md:text-lg lg:text-xl leading-relaxed md:leading-[2.2] text-black font-script"
                       >
                         {letterBody}
                       </motion.p>
@@ -210,7 +210,7 @@ const LetterEnvelope = forwardRef<HTMLElement, LetterEnvelopeProps>(function Let
                         transition={{ delay: 1.6, duration: 0.6 }}
                         className="mt-8 md:mt-14 flex flex-col items-end"
                       >
-                        <p className="text-lg md:text-xl lg:text-2xl font-script text-black leading-relaxed">
+                        <p className="relative top-25 text-lg md:text-xl lg:text-2xl font-script text-black leading-relaxed">
                           {closing}
                         </p>
                       </motion.div>
