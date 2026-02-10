@@ -16,8 +16,8 @@ export default function ValentineButton({
   const isLove = variant === "love";
 
   const question = isLove
-    ? "Will you be my Valentine?"
-    : "Will you be my Broentine?";
+    ? "Would you be my Valentine?"
+    : "Would you be my Broentine?";
 
   const yesResponse = isLove
     ? "You just made my heart complete."
