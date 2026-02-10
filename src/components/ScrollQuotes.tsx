@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 
 interface ScrollQuotesProps {
   quotes: string[];
@@ -10,70 +11,48 @@ interface ScrollQuotesProps {
 function QuoteBlock({
   text,
   index,
+  totalQuotes,
 }: {
   text: string;
   index: number;
+  totalQuotes: number;
 }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+
+  // Fade in at beginning, stay visible, then fade out at end
+  const opacity = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0, 1, 1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0.95, 1, 1, 0.95]);
+
   return (
-    <div 
-      className="h-screen relative"
-      data-scroll
-      data-scroll-speed="1"
-    >
-      <div 
-        className="sticky top-0 h-screen flex items-center justify-center px-6 md:px-12"
-        data-scroll
-        data-scroll-sticky
-        data-scroll-target={`#quote-${index}`}
-      >
-        <blockquote
+    <div ref={ref} className="h-screen relative">
+      <div className="sticky top-0 h-screen flex items-center justify-center px-6 md:px-12">
+        <motion.blockquote
+          style={{ opacity, scale }}
           className="max-w-3xl text-center"
-          data-scroll
-          data-scroll-speed="0.5"
         >
-          <p
-            className="text-3xl md:text-5xl lg:text-6xl font-serif text-black italic leading-tight md:leading-tight"
-          >
+          <p className="text-3xl md:text-5xl lg:text-6xl font-serif text-black italic leading-tight md:leading-tight">
             &ldquo;{text}&rdquo;
           </p>
-        </blockquote>
+        </motion.blockquote>
       </div>
     </div>
   );
 }
 
 export default function ScrollQuotes({ quotes, variant = "love" }: ScrollQuotesProps) {
-  const scrollRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    let locomotiveScroll: any;
-
-    const initScroll = async () => {
-      const LocomotiveScroll = (await import("locomotive-scroll")).default;
-      
-      if (scrollRef.current) {
-        locomotiveScroll = new LocomotiveScroll({
-          el: scrollRef.current,
-          smooth: true,
-          smoothMobile: false,
-          resetNativeScroll: true,
-        });
-      }
-    };
-
-    initScroll();
-
-    return () => {
-      if (locomotiveScroll) locomotiveScroll.destroy();
-    };
-  }, []);
-
   return (
-    <section ref={scrollRef} data-scroll-container>
+    <section>
       {quotes.map((quote, i) => (
-        <div key={i} id={`quote-${i}`}>
-          <QuoteBlock text={quote} index={i} />
-        </div>
+        <QuoteBlock 
+          key={i} 
+          text={quote} 
+          index={i}
+          totalQuotes={quotes.length}
+        />
       ))}
     </section>
   );
